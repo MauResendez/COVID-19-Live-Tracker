@@ -83,9 +83,8 @@ class APIService
     Endpoint.todayDeaths: 'data',
     Endpoint.recovered: 'data',
     Endpoint.critical: 'data',
-    Endpoint.casesPerMillion: 'data',
-    Endpoint.deathsPerMillion: 'data',
+    Endpoint.casesPerOneMillion: 'data',
+    Endpoint.deathsPerOneMillion: 'data',
     Endpoint.totalTests: 'data',
-    Endpoint.testPerOneMillion: 'data',
   };
 }

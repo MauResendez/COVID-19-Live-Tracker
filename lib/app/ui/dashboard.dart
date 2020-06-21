@@ -1,4 +1,5 @@
 import 'package:covid19_live_tracker/app/repositories/data_repository.dart';
+import 'package:covid19_live_tracker/app/repositories/endpoints_data.dart';
 import 'package:covid19_live_tracker/app/services/api.dart';
 import 'package:covid19_live_tracker/app/ui/endpoint_card.dart';
 import 'package:flutter/material.dart';
@@ -11,19 +12,20 @@ class Dashboard extends StatefulWidget
 
 class _DashboardState extends State<Dashboard>
 {
-  int _cases; // The cases we are going to display in the dashboard
+  EndpointsData _endpointsData; // The cases we are going to display in the dashboard
 
+  @override
   void initState() // Initializes the states of the page everytime it's shown
   {
-    _updateData();
     super.initState();
+    _updateData();
   }
 
   Future<void> _updateData() async
   {
     final dataRepository = Provider.of<DataRepository>(context, listen: false); // Have a data repository object ready to be able to retrieve data from it, depending on endpoint
-    final cases = await dataRepository.getEndpointData(Endpoint.cases);
-    setState(() => _cases = cases); // Updates number when refreshed
+    final endpointsData = await dataRepository.getAllEndpointsData();
+    setState(() => _endpointsData = endpointsData); // Updates number when refreshed
   }
 
   Widget build(BuildContext context)
@@ -41,7 +43,11 @@ class _DashboardState extends State<Dashboard>
         (
           children: <Widget>
           [
-            EndpointCard(endpoint: Endpoint.cases, value: _cases)
+            for(var endpoint in Endpoint.values)
+              EndpointCard
+              (
+                endpoint: endpoint, value: _endpointsData != null ? _endpointsData.values[endpoint] : null,
+              )
           ],
         ),
       )

@@ -10,10 +10,9 @@ enum Endpoint
   todayDeaths,
   recovered,
   critical,
-  casesPerMillion,
-  deathsPerMillion,
+  casesPerOneMillion,
+  deathsPerOneMillion,
   totalTests,
-  testPerOneMillion
 }
 
 class API
@@ -53,10 +52,9 @@ class API
     Endpoint.todayDeaths: 'todayDeaths',
     Endpoint.recovered: 'recovered',
     Endpoint.critical: 'critical',
-    Endpoint.casesPerMillion: 'casesPerMillion',
-    Endpoint.deathsPerMillion: 'deathsPerMillion',
+    Endpoint.casesPerOneMillion: 'casesPerOneMillion',
+    Endpoint.deathsPerOneMillion: 'deathsPerOneMillion',
     Endpoint.totalTests: 'totalTests',
-    Endpoint.testPerOneMillion: 'testPerOneMillion',
   };
 
 }
