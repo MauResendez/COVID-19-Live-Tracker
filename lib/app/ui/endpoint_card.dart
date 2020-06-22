@@ -1,29 +1,40 @@
 import 'package:covid19_live_tracker/app/services/api.dart';
 import 'package:flutter/material.dart';
 
+class EndpointCardData
+{
+  final String title;
+  final String assetName;
+  final Color color;
+
+  EndpointCardData(this.title, this.assetName, this.color);
+}
+
 class EndpointCard extends StatelessWidget 
 {
   const EndpointCard({Key key, this.endpoint, this.value}) : super(key: key);
   final Endpoint endpoint; // For what data category we want to show
   final int value; // For the data given to us
 
-  static Map<Endpoint, String> cardTitles = 
+  static Map<Endpoint, EndpointCardData> cardsData = 
   {
-    Endpoint.cases: 'Cases',
-    Endpoint.todayCases: "Today's Cases",
-    Endpoint.active: 'Active',
-    Endpoint.deaths: 'Deaths',
-    Endpoint.todayDeaths: "Today's Deaths",
-    Endpoint.recovered: 'Recovered',
-    Endpoint.critical: 'Critical',
-    Endpoint.casesPerOneMillion: 'Cases Per One Million',
-    Endpoint.deathsPerOneMillion: 'Deaths Per One Million',
-    Endpoint.totalTests: 'Total Tests (Not finished yet)',
+    Endpoint.cases: EndpointCardData('Cases', 'assets/count.png', Color(0xFFFFF492)),
+    Endpoint.todayCases: EndpointCardData("Today's Cases", 'assets/count.png', Color(0xFFFFF492)),
+    Endpoint.active: EndpointCardData('Active', 'assets/count.png', Color(0xFFFFF100)),
+    Endpoint.deaths: EndpointCardData('Deaths', 'assets/death.png', Color(0xFFE40000)),
+    Endpoint.todayDeaths: EndpointCardData("Today's Deaths", 'assets/death.png', Color(0xFFE40000)),
+    Endpoint.recovered: EndpointCardData('Recovered', 'assets/patient.png', Color(0xFF32CD32)),
+    Endpoint.critical: EndpointCardData('Critical', 'assets/fever.png', Color(0xFFE99600)),
+    Endpoint.casesPerOneMillion: EndpointCardData("Cases Per One Million", 'assets/count.png', Color(0xFFFFF492)),
+    Endpoint.deathsPerOneMillion: EndpointCardData("Deaths Per One Million", 'assets/death.png', Color(0xFFE40000)),
+    Endpoint.totalTests: EndpointCardData("Total Tests", 'assets/patient.png', Color(0xFF70A9FF)),
   };
   
   @override
   Widget build(BuildContext context) 
   {
+    final cardData = cardsData[endpoint];
+
     return Padding
     (
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -32,13 +43,30 @@ class EndpointCard extends StatelessWidget
         child: Padding
         (
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Row
+          child: Column
           (
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>
             [
-              Text(cardTitles[endpoint], style: Theme.of(context).textTheme.headline),
-              Text(value != null ? value.toString() : '', style: Theme.of(context).textTheme.display1),
+              Text(cardData.title, style: Theme.of(context).textTheme.headline.copyWith(color: cardData.color)),
+              SizedBox
+              (
+                height: 4
+              ),
+              SizedBox
+              (
+                height: 52,
+                child: Row
+                (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>
+                  [
+                    Image.asset(cardData.assetName, color: cardData.color),
+                    Text(value != null ? value.toString() : '', style: Theme.of(context).textTheme.display1.copyWith(color: cardData.color, fontWeight: FontWeight.w500)),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
