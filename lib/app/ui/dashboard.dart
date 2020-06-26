@@ -2,6 +2,7 @@ import 'package:covid19_live_tracker/app/repositories/data_repository.dart';
 import 'package:covid19_live_tracker/app/repositories/endpoints_data.dart';
 import 'package:covid19_live_tracker/app/services/api.dart';
 import 'package:covid19_live_tracker/app/ui/endpoint_card.dart';
+import 'package:covid19_live_tracker/app/ui/last_updated_status_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +31,8 @@ class _DashboardState extends State<Dashboard>
 
   Widget build(BuildContext context)
   {
+    final formatter = LastUpdatedDateFormatter(_endpointsData != null ? _endpointsData.values[Endpoint.cases].date : null);
+
     return Scaffold
     (
       appBar: AppBar
@@ -43,10 +46,11 @@ class _DashboardState extends State<Dashboard>
         (
           children: <Widget>
           [
+            LastUpdatedStatusText(text: formatter.lastUpdatedStatusText()),
             for(var endpoint in Endpoint.values)
               EndpointCard
               (
-                endpoint: endpoint, value: _endpointsData != null ? _endpointsData.values[endpoint] : null,
+                endpoint: endpoint, value: _endpointsData != null ? _endpointsData.values[endpoint].value : null,
               )
           ],
         ),

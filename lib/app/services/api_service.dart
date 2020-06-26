@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:covid19_live_tracker/app/services/api.dart';
+import 'package:covid19_live_tracker/app/services/endpoint_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,7 +39,7 @@ class APIService
     throw response;
   }
 
-  Future<int> getEndpointData
+  Future<EndpointData> getEndpointData
   ({
       @required String accessToken,
       @required Endpoint endpoint,
@@ -64,9 +65,13 @@ class APIService
 
         final int result = endpointData[responseJsonKey];
 
+        final String dateString = endpointData["date"];
+
+        final date = DateTime.tryParse(dateString); // tryParse parses the dateString given from the API and can give a error message/exception if the string can't be parsed 
+
         if(result != null)
         {
-          return result;
+          return EndpointData(result, date);
         }
       }
     }

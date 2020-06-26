@@ -1,5 +1,6 @@
 import 'package:covid19_live_tracker/app/services/api.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EndpointCardData
 {
@@ -27,8 +28,18 @@ class EndpointCard extends StatelessWidget
     Endpoint.critical: EndpointCardData('Critical', 'assets/fever.png', Color(0xFFE99600)),
     Endpoint.casesPerOneMillion: EndpointCardData("Cases Per One Million", 'assets/count.png', Color(0xFFFFF492)),
     Endpoint.deathsPerOneMillion: EndpointCardData("Deaths Per One Million", 'assets/death.png', Color(0xFFE40000)),
-    Endpoint.totalTests: EndpointCardData("Total Tests", 'assets/patient.png', Color(0xFF70A9FF)),
+    Endpoint.totalTests: EndpointCardData("Total Tests (Not finished yet)", 'assets/patient.png', Color(0xFF70A9FF)),
   };
+
+  String get formattedValue
+  {
+    if(value == null)
+    {
+      return '';
+    }
+
+    return NumberFormat('#,###,###,###').format(value);
+  }
   
   @override
   Widget build(BuildContext context) 
@@ -63,7 +74,7 @@ class EndpointCard extends StatelessWidget
                   children: <Widget>
                   [
                     Image.asset(cardData.assetName, color: cardData.color),
-                    Text(value != null ? value.toString() : '', style: Theme.of(context).textTheme.display1.copyWith(color: cardData.color, fontWeight: FontWeight.w500)),
+                    Text(formattedValue, style: Theme.of(context).textTheme.display1.copyWith(color: cardData.color, fontWeight: FontWeight.w400)),
                   ],
                 ),
               ),
