@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 
 class EndpointCardData
 {
+  EndpointCardData(this.title, this.assetName, this.color);
+
   final String title;
   final String assetName;
   final Color color;
-
-  EndpointCardData(this.title, this.assetName, this.color);
 }
 
 class EndpointCard extends StatelessWidget 

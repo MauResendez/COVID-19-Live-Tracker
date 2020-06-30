@@ -3,9 +3,9 @@ import 'package:intl/intl.dart';
 
 class LastUpdatedDateFormatter
 {
-  final DateTime lastUpdated;
-
   LastUpdatedDateFormatter(@required this.lastUpdated);
+
+  final DateTime lastUpdated;
 
   String lastUpdatedStatusText()
   {

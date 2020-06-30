@@ -21,6 +21,8 @@ class _DashboardState extends State<Dashboard>
   void initState() // Initializes the states of the page everytime it's shown
   {
     super.initState();
+    final dataRepository = Provider.of<DataRepository>(context, listen: false);
+    _endpointsData = dataRepository.getAllEndpointsCachedData(); // Gets the data from the cache
     _updateData();
   }
 
@@ -44,7 +46,7 @@ class _DashboardState extends State<Dashboard>
 
   Widget build(BuildContext context)
   {
-    final formatter = LastUpdatedDateFormatter(_endpointsData != null ? _endpointsData.values[Endpoint.cases].date : null);
+    final formatter = LastUpdatedDateFormatter(_endpointsData != null ? _endpointsData.values[Endpoint.cases]?.date : null);
 
     return Scaffold
     (
@@ -63,7 +65,7 @@ class _DashboardState extends State<Dashboard>
             for(var endpoint in Endpoint.values)
               EndpointCard
               (
-                endpoint: endpoint, value: _endpointsData != null ? _endpointsData.values[endpoint].value : null,
+                endpoint: endpoint, value: _endpointsData != null ? _endpointsData.values[endpoint]?.value : null,
               )
           ],
         ),
